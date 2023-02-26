@@ -1,5 +1,5 @@
 resource "random_id" "filename" {
-  prefix      = "tf."
+  prefix      = var.config_file_prefix
   byte_length = 32
 }
 
@@ -19,7 +19,7 @@ resource "null_resource" "curl" {
 
   provisioner "local-exec" {
     command = <<-EOT
-      curl -s -K ${self.triggers.config_file} -XPUT ${self.triggers.base_url}/${self.triggers.resource} --data-raw "${self.triggers.content}"
+      curl -s -K ${self.triggers.config_file} -XPUT ${self.triggers.base_url}/${self.triggers.resource} --data-raw '${self.triggers.content}'
     EOT
   }
   provisioner "local-exec" {
