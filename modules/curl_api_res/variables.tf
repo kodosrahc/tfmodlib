@@ -7,7 +7,7 @@ variable "tmpdir" {
 variable "content" {
   type = string
 }
-variable "name" {
+variable "resource" {
   type = string
 }
 

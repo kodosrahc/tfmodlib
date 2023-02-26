@@ -10,7 +10,7 @@ resource "local_file" "config" {
 
 resource "null_resource" "curl" {
   triggers = {
-    name        = var.name
+    resource    = var.resource
     content     = var.content
     base_url    = var.base_url
     config_file = local_file.config.filename
@@ -19,13 +19,13 @@ resource "null_resource" "curl" {
 
   provisioner "local-exec" {
     command = <<-EOT
-      curl -s -K ${self.triggers.config_file} -XPUT ${self.triggers.base_url}/${self.triggers.name} --data-raw "${self.triggers.content}"
+      curl -s -K ${self.triggers.config_file} -XPUT ${self.triggers.base_url}/${self.triggers.resource} --data-raw "${self.triggers.content}"
     EOT
   }
   provisioner "local-exec" {
     when    = destroy
     command = <<-EOT
-      curl -s -K ${self.triggers.config_file} -XDELETE ${self.triggers.base_url}/${self.triggers.name}
+      curl -s -K ${self.triggers.config_file} -XDELETE ${self.triggers.base_url}/${self.triggers.resource}
     EOT
   }
 }
