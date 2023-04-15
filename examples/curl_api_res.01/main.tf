@@ -9,6 +9,7 @@ module "do_curl_one" {
   config = sensitive(<<-EOT
     user = iam:pass
     header = "Content-Type: application/json"
+    fail-with-body
   EOT
   )
 }
