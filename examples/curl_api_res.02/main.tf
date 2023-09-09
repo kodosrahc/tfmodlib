@@ -1,5 +1,5 @@
 module "do_curl_one" {
-  source = "../..//modules/curl_api_res_env"
+  source = "../..//modules/curl_api_res_env_tfd"
 
   for_each = toset(keys(local.api_res))
   resource = each.key
@@ -9,7 +9,7 @@ module "do_curl_one" {
   config = sensitive(<<-EOT
     user = iam:pass
     header = "Content-Type: application/json"
-    fail-with-body
+    #fail-with-body
   EOT
   )
 }
